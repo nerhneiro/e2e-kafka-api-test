@@ -1,0 +1,36 @@
+plugins {
+    id 'java'
+    id 'com.github.johnrengelman.shadow' version '7.1.2'
+}
+
+group = 'org.example'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+    maven {
+        url "https://packages.confluent.io/maven/"
+    }
+}
+
+dependencies {
+    // https://mvnrepository.com/artifact/org.apache.kafka/kafka-streams
+    implementation("org.apache.kafka:kafka-streams:3.4.1")
+    implementation("org.apache.kafka:connect-runtime:7.4.8-ccs")
+    implementation 'org.slf4j:slf4j-reload4j:2.0.16'
+
+    testImplementation platform('org.junit:junit-bom:5.10.0')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+}
+
+jar {
+    manifest {
+        attributes(
+                'Main-Class': 'tech.ydb.kafka.api.E2eTest'
+        )
+    }
+}
+
+test {
+    useJUnitPlatform()
+}
